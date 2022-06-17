@@ -3,7 +3,7 @@ Version:        0.10.6
 Release:        1%{?dist}
 Summary:        Python bindings for libalpm
 
-License:        MIT
+License:        GPLv3
 URL:            https://gitlab.archlinux.org/archlinux/pyalpm
 Source0:        %{url}/-/archive/%{version}/pyalpm-%{version}.tar.gz
 
