@@ -1,0 +1,5 @@
+[features]
+hide = ["mysql"]
+[tests]
+run = ["lib"]
+comments = ["doctests can only be run in-tree"]
