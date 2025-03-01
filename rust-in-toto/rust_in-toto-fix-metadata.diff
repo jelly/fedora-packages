@@ -1,0 +1,21 @@
+diff -aur in-toto-0.4.0.old/Cargo.toml in-toto-0.4.0/Cargo.toml
+--- in-toto-0.4.0.old/Cargo.toml	2025-02-27 17:24:47.530904725 +0100
++++ in-toto-0.4.0/Cargo.toml	2025-02-27 17:32:51.125843143 +0100
+@@ -64,7 +64,7 @@
+ version = "2"
+ 
+ [dependencies.derp]
+-version = "0.0.14"
++version = "0.0.15"
+ 
+ [dependencies.glob]
+ version = "0.3.0"
+@@ -101,7 +101,7 @@
+ version = "2.0"
+ 
+ [dependencies.untrusted]
+-version = "0.7"
++version = "0.9"
+ 
+ [dependencies.walkdir]
+ version = "2"
