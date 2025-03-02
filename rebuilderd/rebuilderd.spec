@@ -34,10 +34,14 @@ Rebuilderd - independent build verification daemon.}
 %{cargo_license} > LICENSE.dependencies
 
 %install
-install -d %buildroot/%{_bindir}
+mkdir -p %buildroot/%{_bindir}
 cp target/rpm/rebuilderd-worker %buildroot/%{_bindir}
 cp target/rpm/rebuilderd %buildroot/%{_bindir}
 cp target/rpm/rebuildctl %buildroot/%{_bindir}
+
+# systemd units
+#install -m 644 %{_sourcedir}/%{name}-%{version}/contrib/systemd/rebuilderd.service %buildroot/%{_libdir}/systemd/system
+
 
 %if %{with check}
 %check
