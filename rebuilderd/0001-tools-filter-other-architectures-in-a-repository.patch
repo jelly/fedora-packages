@@ -1,0 +1,29 @@
+From 49b111b35ade407bb5a1ee19b206ea0e811a4a6d Mon Sep 17 00:00:00 2001
+From: Jelle van der Waa <jelle@vdwaa.nl>
+Date: Mon, 3 Mar 2025 22:03:35 +0100
+Subject: [PATCH] tools: filter other architectures in a repository
+
+---
+ tools/src/schedule/fedora.rs | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/tools/src/schedule/fedora.rs b/tools/src/schedule/fedora.rs
+index 4a8e013..f1e264e 100644
+--- a/tools/src/schedule/fedora.rs
++++ b/tools/src/schedule/fedora.rs
+@@ -33,6 +33,12 @@ pub async fn sync(http: &http::Client, sync: &PkgsSync) -> Result<Vec<PkgGroup>>
+                     continue;
+                 }
+ 
++                // filter different architectures as rebuilderd cannot handle different
++                // architectures in the same repository.
++                if pkg.arch != *arch {
++                    continue;
++                }
++
+                 let url = format!("{url}{}", pkg.location.href);
+                 let version = format!("{}-{}", pkg.version.ver, pkg.version.rel);
+                 let artifact = PkgArtifact {
+-- 
+2.48.1
+
