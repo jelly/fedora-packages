@@ -69,6 +69,8 @@ install -p -D -m 0644 contrib/systemd/rebuilderd.tmpfiles %{buildroot}%{_tmpfile
 # sysusers
 install -p -D -m 0644 %{SOURCE1} %{buildroot}%{_sysusersdir}/rebuilderd.conf
 
+# config files
+install -p -D -m 0600 contrib/confs/rebuilderd-worker.conf %{buildroot}%{_sysconfdir}/rebuilderd-worker.conf
 
 %if %{with check}
 %check
@@ -89,11 +91,11 @@ install -p -D -m 0644 %{SOURCE1} %{buildroot}%{_sysusersdir}/rebuilderd.conf
 %{_unitdir}/rebuilderd-sync@.service
 %{_unitdir}/rebuilderd-sync@.timer
 
-# %attr()
 
 %files worker
 %{_bindir}/rebuilderd-worker
 %{_unitdir}/rebuilderd-worker@.service
+%{_sysconfdir}/rebuilderd-worker.conf
 
 %files tools
 %{_bindir}/rebuildctl
