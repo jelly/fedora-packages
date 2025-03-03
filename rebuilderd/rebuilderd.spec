@@ -14,6 +14,7 @@ URL:            https://github.com/kpcyrd/rebuilderd
 Source:         %{url}/archive/refs/tags/v%{version}.tar.gz
 Source:         rebuilderd.sysusers
 Patch:          rebuilderd-downgrade-bzip2.patch
+Patch:          0001-worker-implement-custom-fedora-comparison.patch
 
 BuildRequires:  cargo-rpm-macros >= 24
 BuildRequires:  systemd-rpm-macros
