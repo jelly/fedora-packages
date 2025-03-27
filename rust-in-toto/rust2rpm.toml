@@ -1,2 +1,5 @@
+[package]
+exclude-crate-files = ["tests"]
+
 [requires]
 test = ["openssl"]

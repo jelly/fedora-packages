@@ -39,6 +39,7 @@ use the "%{crate}" crate.
 %doc %{crate_instdir}/MAINTAINERS.txt
 %doc %{crate_instdir}/README.md
 %{crate_instdir}/
+%exclude %{crate_instdir}/tests
 
 %package     -n %{name}+default-devel
 Summary:        %{summary}
