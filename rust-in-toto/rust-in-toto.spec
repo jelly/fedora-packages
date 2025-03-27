@@ -12,7 +12,7 @@ Summary:        Library for in-toto
 License:        MIT
 URL:            https://crates.io/crates/in-toto
 Source:         %{crates_source}
-Patch:          rust_in-toto-fix-metadata.diff
+Patch:          in-toto-fix-metadata.diff
 
 BuildRequires:  cargo-rpm-macros >= 24
 %if %{with check}
