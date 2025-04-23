@@ -2,7 +2,7 @@
 %bcond check 1
 
 Name:           rebuilderd
-Version:        0.22.0
+Version:        0.22.1
 Release:        %autorelease
 Summary:        - independent build verification daemon
 
@@ -13,10 +13,11 @@ License:        GPL-3.0-or-later
 URL:            https://github.com/kpcyrd/rebuilderd
 Source:         %{url}/archive/refs/tags/v%{version}.tar.gz
 Source:         rebuilderd.sysusers
-Patch:          rebuilderd-downgrade-bzip2.patch
 Patch:          0001-worker-implement-custom-fedora-comparison.patch
 Patch:          0001-tools-filter-other-architectures-in-a-repository.patch
 
+Requires:       shared-mime-info
+BuildRequires:  shared-mime-info
 BuildRequires:  cargo-rpm-macros >= 24
 BuildRequires:  systemd-rpm-macros
 Recommends:     rebuilderd-tools
@@ -77,7 +78,8 @@ install -p -D -m 0600 contrib/confs/rebuilderd-worker.conf %{buildroot}%{_syscon
 %if %{with check}
 %check
 # compression tests fail somehow
-%cargo_test -- --workspace --exclude rebuildctl
+#%cargo_test -- --workspace --exclude rebuildctl
+%cargo_test
 %endif
 
 %files
