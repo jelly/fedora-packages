@@ -46,6 +46,18 @@ use the "default" feature of the "%{crate}" crate.
 %files       -n %{name}+default-devel
 %ghost %{crate_instdir}/Cargo.toml
 
+%package     -n %{name}+mysql-devel
+Summary:        %{summary}
+BuildArch:      noarch
+
+%description -n %{name}+mysql-devel %{_description}
+
+This package contains library source intended for building other packages which
+use the "mysql" feature of the "%{crate}" crate.
+
+%files       -n %{name}+mysql-devel
+%ghost %{crate_instdir}/Cargo.toml
+
 %package     -n %{name}+postgres-devel
 Summary:        %{summary}
 BuildArch:      noarch
