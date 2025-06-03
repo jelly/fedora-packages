@@ -21,6 +21,7 @@ Requires:       shared-mime-info
 BuildRequires:  shared-mime-info
 BuildRequires:  cargo-rpm-macros >= 24
 BuildRequires:  systemd-rpm-macros
+BuildRequires:  scdoc
 Recommends:     rebuilderd-tools
 
 %global _description %{expand:
@@ -51,6 +52,7 @@ Rebuilderd-tools - TODO
 %cargo_build
 %{cargo_license_summary}
 %{cargo_license} > LICENSE.dependencies
+make docs
 
 %install
 mkdir -p %buildroot/%{_bindir}
@@ -76,34 +78,63 @@ install -p -D -m 0644 %{SOURCE1} %{buildroot}%{_sysusersdir}/rebuilderd.conf
 # config files
 install -p -D -m 0600 contrib/confs/rebuilderd-worker.conf %{buildroot}%{_sysconfdir}/rebuilderd-worker.conf
 
+# man pages
+install -p -D -m 0644 contrib/docs/rebuilderd.1 %{buildroot}%{_mandir}/man1/rebuilderd.1
+install -p -D -m 0644 contrib/docs/rebuilderd-worker.1 %{buildroot}%{_mandir}/man1/rebuilderd-worker.1
+install -p -D -m 0644 contrib/docs/rebuildctl.1 %{buildroot}%{_mandir}/man1/rebuildctl.1
+
+install -p -D -m 0644 contrib/docs/rebuilderd.conf.5 %{buildroot}%{_mandir}/man5/rebuilderd.conf.5
+install -p -D -m 0644 contrib/docs/rebuilderd-sync.conf.5 %{buildroot}%{_mandir}/man5/rebuild-sync.conf.5
+install -p -D -m 0644 contrib/docs/rebuilderd-worker.conf.5 %{buildroot}%{_mandir}/man5/rebuilderd-worker.conf.5
+
+# generate and install shell completions
+target/rpm/rebuildctl completions bash > rebuildctl.bash
+target/rpm/rebuildctl completions fish > rebuildctl.fish
+target/rpm/rebuildctl completions zsh > _rebuildctl
+ 
+install -Dpm 0644 rebuildctl.bash -t %{buildroot}/%{bash_completions_dir}
+install -Dpm 0644 rebuildctl.fish -t %{buildroot}/%{fish_completions_dir}
+install -Dpm 0644 _rebuildctl -t %{buildroot}/%{zsh_completions_dir}
+
 %if %{with check}
 %check
-# compression tests fail somehow
-#%cargo_test -- --workspace --exclude rebuildctl
 %cargo_test
 %endif
 
 %files
-#%license LICENSE
-#%license LICENSE.dependencies
-#%doc README.md
+%license LICENSE
+%license LICENSE.dependencies
+%doc README.md
 %{_bindir}/rebuilderd
 
 %{_sysusersdir}/rebuilderd.conf
 %{_tmpfilesdir}/%{name}.conf
 
+%{_mandir}/man1/rebuilderd.1.gz
+%{_mandir}/man5/rebuilderd.conf.5.gz
+%{_mandir}/man5/rebuild-sync.conf.5.gz
+
 %{_unitdir}/rebuilderd.service
 %{_unitdir}/rebuilderd-sync@.service
 %{_unitdir}/rebuilderd-sync@.timer
 
-
 %files worker
+%license LICENSE
+%license LICENSE.dependencies
 %{_bindir}/rebuilderd-worker
 %{_unitdir}/rebuilderd-worker@.service
-%{_sysconfdir}/rebuilderd-worker.conf
+%config(noreplace) %{_sysconfdir}/rebuilderd-worker.conf
+%{_mandir}/man1/rebuilderd-worker.1.gz
+%{_mandir}/man5/rebuilderd-worker.conf.5.gz
 
 %files tools
+%license LICENSE
+%license LICENSE.dependencies
 %{_bindir}/rebuildctl
+%{bash_completions_dir}/rebuildctl.bash
+%{fish_completions_dir}/rebuildctl.fish
+%{zsh_completions_dir}/_rebuildctl
+%{_mandir}/man1/rebuildctl.1.gz
 
 %changelog
 %autochangelog
