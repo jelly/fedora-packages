@@ -2,7 +2,7 @@
 %bcond check 1
 
 Name:           rebuilderd
-Version:        0.22.1
+Version:        0.23.1
 Release:        %autorelease
 Summary:        - independent build verification daemon
 
@@ -15,6 +15,7 @@ Source:         %{url}/archive/refs/tags/v%{version}.tar.gz
 Source:         rebuilderd.sysusers
 Patch:          0001-worker-implement-custom-fedora-comparison.patch
 Patch:          0001-tools-filter-other-architectures-in-a-repository.patch
+Patch:          0001-Downgrade-serde-xml-rs-nix-for-Fedora-packaging.patch
 
 Requires:       shared-mime-info
 BuildRequires:  shared-mime-info
