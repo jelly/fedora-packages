@@ -110,9 +110,9 @@ install -Dpm 0644 _rebuildctl -t %{buildroot}/%{zsh_completions_dir}
 %{_sysusersdir}/rebuilderd.conf
 %{_tmpfilesdir}/%{name}.conf
 
-%{_mandir}/man1/rebuilderd.1.gz
-%{_mandir}/man5/rebuilderd.conf.5.gz
-%{_mandir}/man5/rebuild-sync.conf.5.gz
+%{_mandir}/man1/rebuilderd.1.*
+%{_mandir}/man5/rebuilderd.conf.5.*
+%{_mandir}/man5/rebuild-sync.conf.5.*
 
 %{_unitdir}/rebuilderd.service
 %{_unitdir}/rebuilderd-sync@.service
@@ -124,8 +124,8 @@ install -Dpm 0644 _rebuildctl -t %{buildroot}/%{zsh_completions_dir}
 %{_bindir}/rebuilderd-worker
 %{_unitdir}/rebuilderd-worker@.service
 %config(noreplace) %{_sysconfdir}/rebuilderd-worker.conf
-%{_mandir}/man1/rebuilderd-worker.1.gz
-%{_mandir}/man5/rebuilderd-worker.conf.5.gz
+%{_mandir}/man1/rebuilderd-worker.1.*
+%{_mandir}/man5/rebuilderd-worker.conf.5.*
 
 %files tools
 %license LICENSE
@@ -134,7 +134,7 @@ install -Dpm 0644 _rebuildctl -t %{buildroot}/%{zsh_completions_dir}
 %{bash_completions_dir}/rebuildctl.bash
 %{fish_completions_dir}/rebuildctl.fish
 %{zsh_completions_dir}/_rebuildctl
-%{_mandir}/man1/rebuildctl.1.gz
+%{_mandir}/man1/rebuildctl.1.*
 
 %changelog
 %autochangelog
