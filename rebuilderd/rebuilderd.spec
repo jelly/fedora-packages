@@ -2,7 +2,7 @@
 %bcond check 1
 
 Name:           rebuilderd
-Version:        0.23.1
+Version:        0.24.0
 Release:        %autorelease
 Summary:        - independent build verification daemon
 
@@ -77,6 +77,8 @@ install -p -D -m 0644 %{SOURCE1} %{buildroot}%{_sysusersdir}/rebuilderd.conf
 
 # config files
 install -p -D -m 0600 contrib/confs/rebuilderd-worker.conf %{buildroot}%{_sysconfdir}/rebuilderd-worker.conf
+install -p -D -m 0600 contrib/confs/rebuilderd.conf %{buildroot}%{_sysconfdir}/rebuilderd.conf
+install -p -D -m 0600 contrib/confs/rebuilderd-sync.conf %{buildroot}%{_sysconfdir}/rebuilderd-sync.conf
 
 # man pages
 install -p -D -m 0644 contrib/docs/rebuilderd.1 %{buildroot}%{_mandir}/man1/rebuilderd.1
@@ -109,6 +111,9 @@ install -Dpm 0644 _rebuildctl -t %{buildroot}/%{zsh_completions_dir}
 
 %{_sysusersdir}/rebuilderd.conf
 %{_tmpfilesdir}/%{name}.conf
+
+%attr(0640,rebuilderd,rebuilderd) %{_sysconfdir}/rebuilderd.conf
+%attr(0640,rebuilderd,rebuilderd) %{_sysconfdir}/rebuilderd-sync.conf
 
 %{_mandir}/man1/rebuilderd.1.*
 %{_mandir}/man5/rebuilderd.conf.5.*
