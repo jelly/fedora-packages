@@ -4,7 +4,7 @@
 Name:           rebuilderd
 Version:        0.24.0
 Release:        %autorelease
-Summary:        - independent build verification daemon
+Summary:        Independent build verification daemon
 
 SourceLicense:  GPL-3.0-or-later
 License:        GPL-3.0-or-later
@@ -24,22 +24,25 @@ BuildRequires:  systemd-rpm-macros
 BuildRequires:  scdoc
 Recommends:     rebuilderd-tools
 
-%global _description %{expand:
-Rebuilderd - independent build verification daemon.}
 
-%description %{_description}
+%description
+Independent build verification daemon.
+
+Rebuilderd monitors and reproduces binary packages from source.
 
 %package worker
-Summary:        - independent build verification worker
+Summary: Independent build verification worker
 
 %description worker
-Rebuilderd-worker - TODO
+This package contains the rebuilderd-worker service, it connects to rebuilderd
+for a new build task, automatically rebuilds and publishes the results to rebuilderd.
 
 %package tools
-Summary:        - independent build verification tools
+Summary: Independent build verification tools
 
 %description tools
-Rebuilderd-tools - TODO
+This package contains rebuildctl, a CLI tool which queries rebuilderd and can
+show the worker, queue and package status.
 
 %prep
 %autosetup -n rebuilderd-%{version} -p1
