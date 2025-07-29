@@ -34,8 +34,10 @@ Rebuilderd monitors and reproduces binary packages from source.
 Summary: Independent build verification worker
 
 %description worker
-This package contains the rebuilderd-worker service, it connects to rebuilderd
-for a new build task, automatically rebuilds and publishes the results to rebuilderd.
+This package contains the rebuilderd-worker service.
+
+The worker connects to rebuilderd for a new build task, automatically rebuilds
+and publishes the results to rebuilderd.
 
 %package tools
 Summary: Independent build verification tools
