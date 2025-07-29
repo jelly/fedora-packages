@@ -106,6 +106,30 @@ install -Dpm 0644 _rebuildctl -t %{buildroot}/%{zsh_completions_dir}
 %cargo_test
 %endif
 
+%post
+%systemd_post rebuilderd.service
+%systemd_post rebuilderd-sync@.service
+%systemd_post rebuilderd-sync@.timer
+
+%post worker
+%systemd_post rebuilderd-worker.service
+
+%preun
+%systemd_preun rebuilderd.service
+%systemd_preun rebuilderd-sync@.service
+%systemd_preun rebuilderd-sync@.timer
+
+%preun worker
+%systemd_preun rebuilderd-worker.service
+
+%postun
+%systemd_postun rebuilderd.service
+
+%postun worker
+%systemd_postun rebuilderd-worker.service
+%systemd_postun rebuilderd-sync@.service
+%systemd_postun rebuilderd-sync@.timer
+
 %files
 %license LICENSE
 %license LICENSE.dependencies
