@@ -1,0 +1,18 @@
+[Unit]
+Description=rebuilderd-worker: rebuild packages
+
+[Service]
+User=rebuilderd-worker
+ExecStart=/usr/bin/rebuilderd-worker -n %i connect
+
+ProtectSystem=strict
+ReadWritePaths=/var/lib/rebuilderd-worker
+
+CPUSchedulingPolicy=idle
+IOSchedulingClass=3
+
+Restart=always
+RestartSec=0
+
+[Install]
+WantedBy=multi-user.target
