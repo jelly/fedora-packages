@@ -7,7 +7,6 @@ Summary:        Independent build verification daemon
 
 SourceLicense:  GPL-3.0-or-later
 License:        GPL-3.0-or-later
-# LICENSE.dependencies contains a full license breakdown
 
 URL:            https://github.com/kpcyrd/rebuilderd
 Source0:         %{url}/archive/refs/tags/v%{version}.tar.gz
@@ -32,6 +31,7 @@ Rebuilderd monitors and reproduces binary packages from source.
 
 %package worker
 Summary: Independent build verification worker
+Recommends: fedora-repro-build
 
 %description worker
 This package contains the rebuilderd-worker service.
@@ -77,19 +77,21 @@ install -p -D -m 0644 %{SOURCE5} %{buildroot}/%{_unitdir}/%{name}-worker@.servic
 # sysusers / tmpfiles
 install -p -D -m 0644 %{SOURCE1} %{buildroot}%{_sysusersdir}/%{name}.conf
 install -p -D -m 0644 %{SOURCE2} %{buildroot}%{_tmpfilesdir}/%{name}.conf
-install -p -D -m 0644 %{SOURCE3} %{buildroot}%{_tmpfilesdir}/%{name}-worker.conf
-install -p -D -m 0644 %{SOURCE4} %{buildroot}%{_sysusersdir}/%{name}-worker.conf
+install -p -D -m 0644 %{SOURCE3} %{buildroot}%{_sysusersdir}/%{name}-worker.conf
+install -p -D -m 0644 %{SOURCE4} %{buildroot}%{_tmpfilesdir}/%{name}-worker.conf
+
+install -d -m 0755 %{buildroot}/var/lib/%{name}/
+install -d -m 0755 %{buildroot}/var/lib/%{name}-worker/
 
 # config files
 install -p -D -m 0600 contrib/confs/rebuilderd-worker.conf %{buildroot}%{_sysconfdir}/rebuilderd-worker.conf
 install -p -D -m 0600 contrib/confs/%{name}.conf %{buildroot}%{_sysconfdir}/rebuilderd.conf
-install -p -D -m 0600 contrib/confs/rebuilderd-sync.conf %{buildroot}%{_sysconfdir}/rebuilderd-sync.conf
+install -p -D -m 0600 contrib/confs/%{name}-sync.conf %{buildroot}%{_sysconfdir}/rebuilderd-sync.conf
 
 # man pages
 install -p -D -m 0644 contrib/docs/rebuilderd.1 %{buildroot}%{_mandir}/man1/rebuilderd.1
 install -p -D -m 0644 contrib/docs/rebuilderd-worker.1 %{buildroot}%{_mandir}/man1/rebuilderd-worker.1
 install -p -D -m 0644 contrib/docs/rebuildctl.1 %{buildroot}%{_mandir}/man1/rebuildctl.1
-
 install -p -D -m 0644 contrib/docs/rebuilderd.conf.5 %{buildroot}%{_mandir}/man5/rebuilderd.conf.5
 install -p -D -m 0644 contrib/docs/rebuilderd-sync.conf.5 %{buildroot}%{_mandir}/man5/rebuild-sync.conf.5
 install -p -D -m 0644 contrib/docs/rebuilderd-worker.conf.5 %{buildroot}%{_mandir}/man5/rebuilderd-worker.conf.5
@@ -125,24 +127,27 @@ install -Dpm 0644 _rebuildctl -t %{buildroot}/%{zsh_completions_dir}
 %systemd_preun rebuilderd-worker@.service
 
 %postun
-%systemd_postun rebuilderd.service
+%systemd_postun_with_restart rebuilderd.service
+%systemd_postun_with_restart rebuilderd-sync@.service
+%systemd_postun_with_restart rebuilderd-sync@.timer
 
 %postun worker
-%systemd_postun rebuilderd-worker@.service
-%systemd_postun rebuilderd-sync@.service
-%systemd_postun rebuilderd-sync@.timer
+%systemd_postun_with_restart rebuilderd-worker@.service
 
 %files
 %license LICENSE
 %license LICENSE.dependencies
 %doc README.md
+
 %{_bindir}/rebuilderd
 
 %{_sysusersdir}/%{name}.conf
 %{_tmpfilesdir}/%{name}.conf
 
-%attr(0640,rebuilderd,rebuilderd) %{_sysconfdir}/rebuilderd.conf
-%attr(0640,rebuilderd,rebuilderd) %{_sysconfdir}/rebuilderd-sync.conf
+%dir %attr(755,rebuilderd,rebuilderd) /var/lib/rebuilderd
+
+%config(noreplace) %attr(0640,rebuilderd,rebuilderd) %{_sysconfdir}/rebuilderd.conf
+%config(noreplace) %attr(0640,rebuilderd,rebuilderd) %{_sysconfdir}/rebuilderd-sync.conf
 
 %{_mandir}/man1/rebuilderd.1.*
 %{_mandir}/man5/rebuilderd.conf.5.*
@@ -155,23 +160,32 @@ install -Dpm 0644 _rebuildctl -t %{buildroot}/%{zsh_completions_dir}
 %files worker
 %license LICENSE
 %license LICENSE.dependencies
+
 %{_bindir}/rebuilderd-worker
-%{_unitdir}/rebuilderd-worker@.service
-%attr(0640,rebuilderd-worker,rebuilderd-worker) %{_sysconfdir}/rebuilderd.conf
-%config(noreplace) %{_sysconfdir}/rebuilderd-worker.conf
+
+%config(noreplace) %attr(0640,rebuilderd-worker,rebuilderd-worker) %{_sysconfdir}/rebuilderd-worker.conf
+
 %{_mandir}/man1/rebuilderd-worker.1.*
 %{_mandir}/man5/rebuilderd-worker.conf.5.*
+
 %{_libexecdir}/rebuilderd/rebuilder-fedora.sh
+
 %{_sysusersdir}/%{name}-worker.conf
 %{_tmpfilesdir}/%{name}-worker.conf
+%{_unitdir}/rebuilderd-worker@.service
+
+%dir %attr(755,rebuilderd-worker,rebuilderd-worker) /var/lib/rebuilderd-worker
 
 %files tools
 %license LICENSE
 %license LICENSE.dependencies
+
 %{_bindir}/rebuildctl
+
 %{bash_completions_dir}/rebuildctl.bash
 %{fish_completions_dir}/rebuildctl.fish
 %{zsh_completions_dir}/_rebuildctl
+
 %{_mandir}/man1/rebuildctl.1.*
 
 %changelog
