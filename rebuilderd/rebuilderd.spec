@@ -9,12 +9,12 @@ SourceLicense:  GPL-3.0-or-later
 License:        GPL-3.0-or-later
 
 URL:            https://github.com/kpcyrd/rebuilderd
-Source0:         %{url}/archive/refs/tags/v%{version}.tar.gz
-Source1:         %{name}.sysusers
-Source2:         %{name}.tmpfiles
-Source3:         %{name}-worker.sysusers
-Source4:         %{name}-worker.tmpfiles
-Source5:         %{name}-worker@.service
+Source0:        %{url}/archive/refs/tags/v%{version}.tar.gz
+Source1:        %{name}.sysusers
+Source2:        %{name}.tmpfiles
+Source3:        %{name}-worker.sysusers
+Source4:        %{name}-worker.tmpfiles
+Source5:        %{name}-worker@.service
 
 Requires:       shared-mime-info
 BuildRequires:  shared-mime-info
