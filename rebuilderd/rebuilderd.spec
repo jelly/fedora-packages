@@ -6,7 +6,55 @@ Release:        %autorelease
 Summary:        Independent build verification daemon
 
 SourceLicense:  GPL-3.0-or-later
-License:        GPL-3.0-or-later
+# Rust crates compiled into the executable contribute additional license terms.
+# To obtain the following list of licenses, build the package and note the
+# output of %%{cargo_license_summary}. This should automatically include the
+# licenses of the crates that were bundled as additional Sources.
+#
+# (Apache-2.0 OR MIT) AND BSD-3-Clause
+# (MIT OR Apache-2.0) AND Unicode-DFS-2016
+# 0BSD OR MIT OR Apache-2.0
+# Apache-2.0
+# Apache-2.0 AND ISC AND (MIT OR Apache-2.0)
+# Apache-2.0 OR BSL-1.0
+# Apache-2.0 OR ISC OR MIT
+# Apache-2.0 OR MIT
+# Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT
+# BSD-2-Clause OR Apache-2.0 OR MIT
+# BSD-3-Clause
+# GPL-3.0-or-later
+# ISC
+# MIT
+# MIT OR Apache-2.0
+# MIT OR Zlib OR Apache-2.0
+# MPL-2.0
+# Unicode-3.0
+# Unlicense OR MIT
+# Zlib
+# bzip2-1.0.6
+License:        %{shrink:
+     ((Apache-2.0 OR MIT) AND BSD-3-Clause) AND
+     ((MIT OR Apache-2.0) AND Unicode-DFS-2016) AND
+     (0BSD OR MIT OR Apache-2.0) AND
+     Apache-2.0 AND
+     (Apache-2.0 AND ISC AND (MIT OR Apache-2.0)) AND
+     (Apache-2.0 OR BSL-1.0) AND
+     (Apache-2.0 OR ISC OR MIT) AND
+     (Apache-2.0 OR MIT) AND
+     (Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT) AND
+     (BSD-2-Clause OR Apache-2.0 OR MIT) AND
+     BSD-3-Clause AND
+     GPL-3.0-or-later AND
+     ISC AND
+     MIT AND
+     MIT OR Apache-2.0 AND
+     MIT OR Zlib OR Apache-2.0 AND
+     MPL-2.0 AND
+     Unicode-3.0 AND
+     Unlicense OR MIT AND
+     Zlib AND
+     bzip2-1.0.6
+}
 
 URL:            https://github.com/kpcyrd/rebuilderd
 Source0:        %{url}/archive/refs/tags/v%{version}.tar.gz
