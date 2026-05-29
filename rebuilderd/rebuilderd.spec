@@ -57,7 +57,7 @@ License:        %{shrink:
 }
 
 URL:            https://github.com/kpcyrd/rebuilderd
-Source0:        %{url}/archive/refs/tags/v%{version}.tar.gz
+Source0:        %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
 Source1:        %{name}.sysusers
 Source2:        %{name}.tmpfiles
 Source3:        %{name}-worker.sysusers
