@@ -1,7 +1,7 @@
 %bcond check 1
 
 Name:           rebuilderd
-Version:        0.26.0
+Version:        0.28.0
 Release:        %autorelease
 Summary:        Independent build verification daemon
 
