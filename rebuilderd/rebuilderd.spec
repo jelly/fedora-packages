@@ -80,6 +80,7 @@ Rebuilderd monitors and reproduces binary packages from source.
 %package worker
 Summary: Independent build verification worker
 Recommends: fedora-repro-build
+Requires: group(mock)
 
 %description worker
 This package contains the rebuilderd-worker service.
